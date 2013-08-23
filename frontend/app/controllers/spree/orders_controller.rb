@@ -45,6 +45,30 @@ module Spree
     def edit
       @order = current_order(true)
       associate_user
+      code = params[:code]
+      require "oauth2"
+ 
+      # make these match what's on the app show page
+      client_id     = "be6edc553e5b47ef62"
+      client_secret = "a6fc0bec773398eb48c97bf2c135980d"
+      redirect_uri  = "http://idme-ecommerce-demo.dev/cart"
+       
+      # set this to where ID.me is running, for example http://api.sandbox.id.me
+      site          = "http://api.sandbox.id.me"
+       
+      # set up your client
+      client = OAuth2::Client.new(client_id, client_secret, :site => site, :raise_error => true)
+       
+      token = client.auth_code.get_token(code, :redirect_uri => redirect_uri)
+       
+      # request that user"s information
+      response = token.get("/v1/me.json")
+      @data = JSON.parse(response.body)
+
+      # returns
+      # => {"id"=>"891ad77c706e1edc1", "verified"=>true, "affiliation"=>"Service Member"}
+       
+      # https://www.troopswap.com/auth/idme/callback
     end
 
     # Adds a new item to the order (creating a new order if none already exists)
