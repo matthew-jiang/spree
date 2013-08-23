@@ -64,8 +64,7 @@ module Spree
         # request that user"s information
         response = token.get("/v2/military.json")
         @data = JSON.parse(response.body)
-        datahash = @data
-        if datahash[:verified] == true
+        if response.body[:verified] == true
           @message = "Congratulations. You have successfully verified with ID.Me. In your own application, you can make price adjustments. Thank you."
         
         else
