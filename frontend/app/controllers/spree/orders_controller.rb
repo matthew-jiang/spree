@@ -47,8 +47,6 @@ module Spree
       @order = current_order(true)
       associate_user
       code = params[:code]
-      @order.coupon_code = 'id.me'
-      @order.save
       if code.present?
         # make these match what's on the app show page
         client_id     = "be6edc553e5b47ef62"
@@ -68,7 +66,10 @@ module Spree
         @data = JSON.parse(response.body)
         datahash = @data
         if datahash[:verified] == true
-
+          @message = "Congratulations. You have successfully verified with ID.Me. In your own application, you can make price adjustments. Thank you."
+        
+        else
+          @message = ''
         end
       end
     end
