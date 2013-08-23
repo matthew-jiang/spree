@@ -12,7 +12,7 @@ module Spree
     end
 
     def compute(object=nil)
-      self.preferred_amount
+      self.preferred_amount = 10
     end
   end
 end

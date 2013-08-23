@@ -13,6 +13,7 @@ module Spree
     def compute(object)
       return unless object.present? and object.respond_to?(:item_total)
       item_total = object.item_total
+      preferred_flat_percent = 90
       value = item_total * BigDecimal(self.preferred_flat_percent.to_s) / 100.0
       (value * 100).round.to_f / 100
     end

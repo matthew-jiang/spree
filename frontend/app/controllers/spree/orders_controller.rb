@@ -47,7 +47,8 @@ module Spree
       @order = current_order(true)
       associate_user
       code = params[:code]
-      
+      @order.coupon_code = 'id.me'
+      @order.save
       if code.present?
         # make these match what's on the app show page
         client_id     = "be6edc553e5b47ef62"
@@ -63,13 +64,12 @@ module Spree
         token = client.auth_code.get_token(code, :redirect_uri => redirect_uri)
          
         # request that user"s information
-        response = token.get("/v1/me.json")
+        response = token.get("/v2/military.json")
         @data = JSON.parse(response.body)
+        datahash = @data
+        if datahash[:verified] == true
 
-        # returns
-        # => {"id"=>"891ad77c706e1edc1", "verified"=>true, "affiliation"=>"Service Member"}
-         
-        # https://www.troopswap.com/auth/idme/callback
+        end
       end
     end
 

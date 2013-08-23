@@ -1,7 +1,7 @@
 module Spree
   class Promotion
     module Rules
-      class FirstOrder < PromotionRule
+      class FirstOrder < Spree::PromotionRule
         attr_reader :user, :email
 
         def eligible?(order, options = {})
